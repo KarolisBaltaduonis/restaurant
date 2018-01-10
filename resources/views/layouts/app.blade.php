@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Restaurant') }}</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -29,7 +29,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ config('app.name', 'Restaurant') }}
                     </a>
                 </div>
 
@@ -37,6 +37,14 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
+                        <li> <a href="{{route('reservation.create')}}">Reservation </a> </li>
+                        <li><a href="{{route('cart.order')}}"> <span class="glyphicon glyphicon-shopping-cart"> Užsakytos <span id="totalQty">
+
+                          @if (Session::has('cart'))
+                          {{ Session::get('cart')->totalQty }}
+                          @else 0
+                          @endif
+                      </span> prekės </a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -52,6 +60,9 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
+                                  @if (Auth::user()->admin)
+                                  <li><a href="{{ route('admin') }}">Admin panele</a></li>
+                                  @endif
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -62,6 +73,9 @@
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
+                                    </li>
+                                    <li>
+
                                     </li>
                                 </ul>
                             </li>
