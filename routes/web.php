@@ -33,6 +33,11 @@
 
 Auth::routes();
 
+// loginas su facebook
+
+Route::get('login/{driver}', 'Auth\LoginController@redirectToProvider')->name('social.login');
+Route::get('login/{driver}/callback', 'Auth\LoginController@handleProviderCallback');
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/reservation', 'Reservation2Controller@create')->name('reservation.create')->middleware('auth');
 Route::post('/reservation', 'Reservation2Controller@store')->name('reservation.store')->middleware('auth');
@@ -43,7 +48,7 @@ Route::get('/cart/{id}', 'CartController@deleteByOne')->name('cart.deleteByOne')
 Route::get('/cart2/delete', 'CartController@deleteAll')->name('cart.deleteAll');
 Route::get('/cart2/deleteRow/{id}', 'CartController@deleteAllRow')->name('cart.deleteAllRow');
 Route::get('/checkout', 'OrderController@checkout')->name('cart.checkout')->middleware('auth');
-// Route::get()
+Route::get('/profile', 'OrderController@profile')->name('profile')->middleware('auth');
 
 
 Route::group(['middleware'=> ['auth', 'admin'], 'prefix'=>'admin'],function() {

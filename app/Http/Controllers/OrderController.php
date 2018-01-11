@@ -23,7 +23,7 @@ class OrderController extends Controller
 
   public function profile()
   {
-    $orders = Auth::user()->orders();
+    $orders = Auth::user()->orders;
 
     $orders -> transform(function($order,$key){
       $order -> cart = unserialize ($order->cart);
